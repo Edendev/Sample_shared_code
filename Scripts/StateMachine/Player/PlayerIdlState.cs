@@ -23,22 +23,22 @@ namespace Game.Generic.StateMachine.PlayerStates
 
             GameManager.PlayerInput.SubscribeToInputAction(inputSchema, InputAction.Down, InputType.Dash, controller.Actions.Process<PlayerDashAction>);
             GameManager.PlayerInput.SubscribeToInputAction(inputSchema, InputAction.Down, InputType.Interact, controller.Actions.Process<PlayerInteractAction>);
-            GameManager.PlayerInput.SubscribeToInputAction(inputSchema, InputAction.Down, InputType.Reload, controller.Actions.Process<PlayerReloadAction>);
+            GameManager.PlayerInput.SubscribeToInputAction(inputSchema, InputAction.Down, InputType.Block, controller.Actions.Process<PlayerBlockAction>);
+            GameManager.PlayerInput.SubscribeToInputAction(inputSchema, InputAction.Down, InputType.Skill_slot_0, controller.Actions.Process<PlayerUseSkillAtSlot0Action>);
+            GameManager.PlayerInput.SubscribeToInputAction(inputSchema, InputAction.Down, InputType.Skill_slot_1, controller.Actions.Process<PlayerUseSkillAtSlot1Action>);
+            GameManager.PlayerInput.SubscribeToInputAction(inputSchema, InputAction.Pressed, InputType.Attack, controller.Actions.ProcessMainTriggerAction);
 
             if (inputSchema == InputSchema.KeyboardAndMouse)
             {
-                GameManager.PlayerInput.SubscribeToInputAction(inputSchema, InputAction.Down, InputType.Fire, controller.Actions.ProcessMainTriggerAction);
-                GameManager.PlayerInput.SubscribeToInputAction(inputSchema, InputAction.Down, InputType.MainItem, controller.Actions.Process<PlayerUseMainHandItemAction>);
-                GameManager.PlayerInput.SubscribeToInputAction(inputSchema, InputAction.Down, InputType.SecondaryItem, controller.Actions.Process<PlayerUseSecondaryHandItemAction>);
-                GameManager.PlayerInput.SubscribeToInputAction(inputSchema, InputAction.Down, InputType.MeleeItem, controller.Actions.Process<PlayerUseMeleeItemAction>);
-                GameManager.PlayerInput.SubscribeToInputAction(inputSchema, InputAction.Down, InputType.MiscItem, controller.Actions.Process<PlayerUseMiscItemAction>);
-                GameManager.PlayerInput.SubscribeToInputAction(inputSchema, InputAction.Down, InputType.Aim, OnAimInputDown);
+                GameManager.PlayerInput.SubscribeToInputAction(inputSchema, InputAction.Down, InputType.PreviousItem, controller.Actions.Process<PlayerEquipPreviousMiscAction>);
+                GameManager.PlayerInput.SubscribeToInputAction(inputSchema, InputAction.Down, InputType.NextItem, controller.Actions.Process<PlayerEquipNextMiscAction>);
+                GameManager.PlayerInput.SubscribeToInputAction(inputSchema, InputAction.Down, InputType.UseItem, controller.Actions.Process<PlayerUseMiscItemAction>);
+                GameManager.PlayerInput.SubscribeToInputAction(inputSchema, InputAction.Pressed, InputType.Attack, OnAttackInputDown);
             }
             else if (inputSchema == InputSchema.Gamepad)
             {
-                GameManager.PlayerInput.SubscribeToAxisAction(inputSchema, AxisType.Fire, InputAction.Down, OnFireAxisDown);
-                GameManager.PlayerInput.SubscribeToInputAction(inputSchema, InputAction.Down, InputType.NextItem, controller.Actions.Process<PlayerUseNextItemAction>);
-                GameManager.PlayerInput.SubscribeToInputAction(inputSchema, InputAction.Down, InputType.PreviousItem, controller.Actions.Process<PlayerUsePreviousItemAction>);
+                GameManager.PlayerInput.SubscribeToAxisAction(inputSchema, AxisType.Attack, InputAction.Pressed, OnAttackAxisDown);
+                GameManager.PlayerInput.SubscribeToAxisAction(inputSchema, AxisType.Navigation, InputAction.Down, OnNavigationAxisDown);
             }
         }
 
@@ -46,35 +46,42 @@ namespace Game.Generic.StateMachine.PlayerStates
         {
             GameManager.PlayerInput.UnSubscribeToInputAction(inputSchema, InputAction.Down, InputType.Dash, controller.Actions.Process<PlayerDashAction>);
             GameManager.PlayerInput.UnSubscribeToInputAction(inputSchema, InputAction.Down, InputType.Interact, controller.Actions.Process<PlayerInteractAction>);
-            GameManager.PlayerInput.UnSubscribeToInputAction(inputSchema, InputAction.Down, InputType.Reload, controller.Actions.Process<PlayerReloadAction>);
+            GameManager.PlayerInput.UnSubscribeToInputAction(inputSchema, InputAction.Down, InputType.Block, controller.Actions.Process<PlayerBlockAction>);
+            GameManager.PlayerInput.UnSubscribeToInputAction(inputSchema, InputAction.Down, InputType.Skill_slot_0, controller.Actions.Process<PlayerUseSkillAtSlot0Action>);
+            GameManager.PlayerInput.UnSubscribeToInputAction(inputSchema, InputAction.Down, InputType.Skill_slot_1, controller.Actions.Process<PlayerUseSkillAtSlot1Action>);
+            GameManager.PlayerInput.UnSubscribeToInputAction(inputSchema, InputAction.Pressed, InputType.Attack, controller.Actions.ProcessMainTriggerAction);
 
             if (inputSchema == InputSchema.KeyboardAndMouse)
             {
-                GameManager.PlayerInput.UnSubscribeToInputAction(inputSchema, InputAction.Down, InputType.Fire, controller.Actions.ProcessMainTriggerAction);
-                GameManager.PlayerInput.UnSubscribeToInputAction(inputSchema, InputAction.Down, InputType.MainItem, controller.Actions.Process<PlayerUseMainHandItemAction>);
-                GameManager.PlayerInput.UnSubscribeToInputAction(inputSchema, InputAction.Down, InputType.SecondaryItem, controller.Actions.Process<PlayerUseSecondaryHandItemAction>);
-                GameManager.PlayerInput.UnSubscribeToInputAction(inputSchema, InputAction.Down, InputType.MeleeItem, controller.Actions.Process<PlayerUseMeleeItemAction>);
-                GameManager.PlayerInput.UnSubscribeToInputAction(inputSchema, InputAction.Down, InputType.MiscItem, controller.Actions.Process<PlayerUseMiscItemAction>);
-                GameManager.PlayerInput.UnSubscribeToInputAction(inputSchema, InputAction.Down, InputType.Aim, OnAimInputDown);
+                GameManager.PlayerInput.UnSubscribeToInputAction(inputSchema, InputAction.Down, InputType.PreviousItem, controller.Actions.Process<PlayerEquipPreviousMiscAction>);
+                GameManager.PlayerInput.UnSubscribeToInputAction(inputSchema, InputAction.Down, InputType.NextItem, controller.Actions.Process<PlayerEquipNextMiscAction>);
+                GameManager.PlayerInput.UnSubscribeToInputAction(inputSchema, InputAction.Down, InputType.UseItem, controller.Actions.Process<PlayerUseMiscItemAction>);
+                GameManager.PlayerInput.UnSubscribeToInputAction(inputSchema, InputAction.Pressed, InputType.Attack, OnAttackInputDown);
             }
             else if (inputSchema == InputSchema.Gamepad)
             {
-                GameManager.PlayerInput.UnSubscribeToAxisAction(inputSchema, AxisType.Fire, InputAction.Down, OnFireAxisDown);
-                GameManager.PlayerInput.UnSubscribeToInputAction(inputSchema, InputAction.Down, InputType.NextItem, controller.Actions.Process<PlayerUseNextItemAction>);
-                GameManager.PlayerInput.UnSubscribeToInputAction(inputSchema, InputAction.Down, InputType.PreviousItem, controller.Actions.Process<PlayerUsePreviousItemAction>);
+                GameManager.PlayerInput.UnSubscribeToAxisAction(inputSchema, AxisType.Attack, InputAction.Pressed, OnAttackAxisDown);
+                GameManager.PlayerInput.UnSubscribeToAxisAction(inputSchema, AxisType.Navigation, InputAction.Down, OnNavigationAxisDown);
             }
 
             base.Exit();
         }
 
-        void OnAimInputDown()
+        void OnAttackInputDown()
         {
             if (controller.Inventory.GetCurrentUsingItem<Gun>() != null) stateMachine.ChangeState(controller.GetPlayerAimingState());
         }
 
-        void OnFireAxisDown(AxisPressedDirection axisPressedDirection)
+        void OnAttackAxisDown(AxisPressedDirection axisPressedDirection)
         {
             controller.Actions.ProcessMainTriggerAction();
+        }
+
+        void OnNavigationAxisDown(AxisPressedDirection axisPressedDirection)
+        {
+            if (axisPressedDirection == AxisPressedDirection.Right) controller.Actions.Process<PlayerEquipNextMiscAction>();
+            else if (axisPressedDirection == AxisPressedDirection.Left) controller.Actions.Process<PlayerEquipPreviousMiscAction>();
+            else if (axisPressedDirection == AxisPressedDirection.Up) controller.Actions.Process<PlayerUseMiscItemAction>();
         }
 
         public override void HandleAxisInput()
@@ -92,8 +99,8 @@ namespace Game.Generic.StateMachine.PlayerStates
 
             if (inputSchema == InputSchema.Gamepad)
             {
-                float aimVerticalAxisValue = GameManager.PlayerInput.GetAxisValue(PlayerInput.PlayerInput.GetAxis(controller.GetInputSchema(), AxisType.Aim, AxisDirection.Vertical));
-                float aimHorizontalAxisValue = GameManager.PlayerInput.GetAxisValue(PlayerInput.PlayerInput.GetAxis(controller.GetInputSchema(), AxisType.Aim, AxisDirection.Horizontal));
+                float aimVerticalAxisValue = GameManager.PlayerInput.GetAxisValue(PlayerInput.PlayerInput.GetAxis(controller.GetInputSchema(), AxisType.Attack, AxisDirection.Vertical));
+                float aimHorizontalAxisValue = GameManager.PlayerInput.GetAxisValue(PlayerInput.PlayerInput.GetAxis(controller.GetInputSchema(), AxisType.Attack, AxisDirection.Horizontal));
 
                 if (Mathf.Abs(aimVerticalAxisValue) > AXIS_AIM_SENSITIVITY || Mathf.Abs(aimHorizontalAxisValue) > AXIS_AIM_SENSITIVITY)
                 {
